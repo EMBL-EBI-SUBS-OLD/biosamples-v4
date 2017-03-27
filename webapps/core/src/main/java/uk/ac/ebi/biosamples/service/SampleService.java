@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.BlockingQueue;
@@ -101,13 +102,13 @@ public class SampleService {
 	 */
 	public Sample fetch(String accession) throws IllegalArgumentException {
 		// return the raw sample from the repository
-		MongoSample mongoSample = mongoSampleRepository.findOne(accession);
-		if (mongoSample == null) {
+		Optional<MongoSample> mongoSample = mongoSampleRepository.findOne(accession);
+		if (mongoSample == null || !mongoSample.isPresent()) {
 			throw new IllegalArgumentException("Unable to find sample (" + accession + ")");
 		}
 
 		// convert it into the format to return
-		Sample sample = conversionService.convert(mongoSample, Sample.class);
+		Sample sample = conversionService.convert(mongoSample.get(), Sample.class);
 		
 		// add any additional inverse relationships
 		sample = inverseRelationshipService.insertInverses(sample);
@@ -117,6 +118,7 @@ public class SampleService {
 		return sample;
 	}
 	
+	//this is only multi-threaded when called from another class
 	@Async("threadPoolTaskExecutor")
 	public Future<Sample> fetchAsync(String accession) {
 		return new AsyncResult<>(fetch(accession));

@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-//import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.solr.core.SolrTemplate;
@@ -31,7 +30,6 @@ import com.mongodb.MongoClientOptions;
 import com.mongodb.ReadPreference;
 
 import uk.ac.ebi.biosamples.model.Sample;
-import uk.ac.ebi.biosamples.solr.CustomSolrTemplate;
 import uk.ac.ebi.biosamples.xml.XmlSampleHttpMessageConverter;
 
 @SpringBootApplication

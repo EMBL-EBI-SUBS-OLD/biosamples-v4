@@ -42,15 +42,4 @@ public class SolrConfig {
 		
 		return solrTemplate;
 	}
-
-    @Value("${spring.data.solr.host:http://localhost:8983}")
-    String solrHost;
-
-    //workaround for 1.5.x problems with multicore solr
-    @Bean
-    @Primary
-    public SolrTemplate solrTemplate(){
-        CustomSolrTemplate template = new CustomSolrTemplate(new HttpSolrClient(solrHost));
-        return template;
-    }
 }
